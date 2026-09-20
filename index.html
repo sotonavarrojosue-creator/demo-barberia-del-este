@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Barbería del Este — Barbería en San Rafael, San José</title>
+    <meta name="description" content="La Barbería del Este — Cortes de cabello, barba y combos en San Rafael, San José. Reservá tu cita.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%231A1A1A' stroke='%23C89B3C' stroke-width='2'/><text x='16' y='21' text-anchor='middle' fill='%23C89B3C' font-family='serif' font-size='14' font-weight='bold'>LBE</text></svg>">
+    <style>
+        /* ===========================
+           TOKENS DE DISEÑO
+           =========================== */
+        :root {
+            /* Colores */
+            --negro-carbon: #1A1A1A;
+            --crema-hueso: #F2E9D8;
+            --dorado-barbero: #C89B3C;
+            --vino-tinto: #7A2222;
+            --blanco: #FFFFFF;
+            --gris-oscuro: #2A2A2A;
+            --gris-medio: #4A4A4A;
+            --gris-claro: #8A8A8A;
+
+            /* Tipografía */
+            --font-titulos: 'Bebas Neue', 'Oswald', sans-serif;
+            --font-texto: 'Poppins', 'Inter', sans-serif;
+
+            /* Espaciado */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-2xl: 4rem;
+
+            /* Bordes */
+            --border-radius: 2px;
+            --border-hard: 3px solid var(--dorado-barbero);
+        }
+
+        /* ===========================
+           RESET & BASE
+           =========================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-texto);
+            background-color: var(--negro-carbon);
+            color: var(--crema-hueso);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ===========================
+           UTILIDADES
+           =========================== */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .section-title {
+            font-family: var(--font-titulos);
+            font-size: 2.5rem;
+            letter-spacing: 0.05em;
+            color: var(--dorado-barbero);
+            text-align: center;
+            margin-bottom: var(--space-lg);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--dorado-barbero);
+            margin: var(--space-xs) auto 0;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--dorado-barbero);
+            color: var(--negro-carbon);
+            font-family: var(--font-titulos);
+            font-size: 1.2rem;
+            letter-spacing: 0.08em;
+            padding: var(--space-sm) var(--space-lg);
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            background: #d4a843;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            background: transparent;
+            color: var(--dorado-barbero);
+            font-family: var(--font-titulos);
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            padding: var(--space-sm) var(--space-lg);
+            border: 2px solid var(--dorado-barbero);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-outline:hover {
+            background: var(--dorado-barbero);
+            color: var(--negro-carbon);
+        }
+
+        /* ===========================
+           NAV
+           =========================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(200, 155, 60, 0.2);
+            padding: var(--space-xs) 0;
+        }
+
+        .nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-titulos);
+            font-size: 1.3rem;
+            color: var(--dorado-barbero);
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links {
+            display: none;
+            list-style: none;
+            gap: var(--space-md);
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--crema-hueso);
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--dorado-barbero);
+        }
+
+        .nav-cta {
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+            .nav-cta {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ===========================
+           HERO
+           =========================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px var(--space-md) var(--space-2xl);
+            background: var(--negro-carbon);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(200, 155, 60, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(122, 34, 34, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-logo {
+            width: 180px;
+            height: 180px;
+            margin-bottom: var(--space-lg);
+        }
+
+        @media (min-width: 768px) {
+            .hero-logo {
+                width: 240px;
+                height: 240px;
+            }
+        }
+
+        .hero h1 {
+            font-family: var(--font-titulos);
+            font-size: 3.5rem;
+            letter-spacing: 0.08em;
+            color: var(--crema-hueso);
+            line-height: 1;
+            margin-bottom: var(--space-xs);
+        }
+
+        .hero .tagline {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--gris-claro);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero .location-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 0.85rem;
+            color: var(--dorado-barbero);
+            margin-bottom: var(--space-xl);
+            border: 1px solid rgba(200, 155, 60, 0.3);
+            padding: var(--space-xs) var(--space-sm);
+        }
+
+        .hero .location-tag svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--dorado-barbero);
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 5rem;
+            }
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero h1 {
+                font-size: 6rem;
+            }
+        }
+
+        /* ===========================
+           SERVICIOS
+           =========================== */
+        .servicios {
+            padding: var(--space-2xl) 0;
+            background: var(--gris-oscuro);
+        }
+
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+        }
+
+        @media (min-width: 640px) {
+            .servicios-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .servicio-card {
+            background: var(--negro-carbon);
+            border: 1px solid rgba(200, 155, 60, 0.15);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            transition: border-color 0.3s;
+        }
+
+        .servicio-card:hover {
+            border-color: var(--dorado-barbero);
+        }
+
+        .servicio-card.featured {
+            border-color: var(--dorado-barbero);
+            background: linear-gradient(135deg, var(--negro-carbon) 0%, rgba(200, 155, 60, 0.08) 100%);
+        }
+
+        .servicio-card .badge {
+            font-family: var(--font-titulos);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--negro-carbon);
+            background: var(--dorado-barbero);
+            padding: 2px 8px;
+            align-self: flex-start;
+            text-transform: uppercase;
+        }
+
+        .servicio-card h3 {
+            font-family: var(--font-titulos);
+            font-size: 1.5rem;
+            letter-spacing: 0.05em;
+            color: var(--crema-hueso);
+        }
+
+        .servicio-card .duracion {
+            font-size: 0.8rem;
+            color: var(--gris-claro);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .servicio-card .duracion svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--gris-claro);
+        }
+
+        .servicio-card .precio {
+            font-family: var(--font-titulos);
+            font-size: 2rem;
+            color: var(--dorado-barbero);
+            margin-top: auto;
+        }
+
+        .servicio-card .precio span {
+            font-family: var(--font-texto);
+            font-size: 0.8rem;
+            color: var(--gris-claro);
+        }
+
+        /* ===========================
+           HORARIO
+           =========================== */
+        .horario {
+            padding: var(--space-2xl) 0;
+            background: var(--negro-carbon);
+        }
+
+        .horario-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        @media (min-width: 768px) {
+            .horario-content {
+                flex-direction: row;
+                justify-content: center;
+                gap: var(--space-2xl);
+            }
+        }
+
+        .horario-table {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .horario-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid rgba(200, 155, 60, 0.1);
+        }
+
+        .horario-row:last-child {
+            border-bottom: none;
+        }
+
+        .horario-row .dia {
+            font-weight: 500;
+            color: var(--crema-hueso);
+        }
+
+        .horario-row .hora {
+            color: var(--dorado-barbero);
+            font-weight: 400;
+        }
+
+        .horario-row.cerrado .hora {
+            color: var(--vino-tinto);
+        }
+
+        .horario-note {
+            font-size: 0.85rem;
+            color: var(--gris-claro);
+            text-align: center;
+            font-style: italic;
+            max-width: 300px;
+        }
+
+        @media (min-width: 768px) {
+            .horario-note {
+                text-align: left;
+            }
+        }
+
+        /* ===========================
+           UBICACIÓN
+           =========================== */
+        .ubicacion {
+            padding: var(--space-2xl) 0;
+            background: var(--gris-oscuro);
+        }
+
+        .ubicacion-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        @media (min-width: 768px) {
+            .ubicacion-content {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .ubicacion-info {
+            flex: 1;
+        }
+
+        .ubicacion-info h3 {
+            font-family: var(--font-titulos);
+            font-size: 1.8rem;
+            color: var(--crema-hueso);
+            margin-bottom: var(--space-sm);
+            letter-spacing: 0.05em;
+        }
+
+        .ubicacion-info .direccion {
+            font-size: 1.05rem;
+            color: var(--crema-hueso);
+            margin-bottom: var(--space-md);
+            line-height: 1.7;
+        }
+
+        .ubicacion-info .referencia {
+            font-size: 0.85rem;
+            color: var(--dorado-barbero);
+            padding: var(--space-xs) var(--space-sm);
+            border-left: 3px solid var(--dorado-barbero);
+            background: rgba(200, 155, 60, 0.08);
+        }
+
+        .ubicacion-mapa {
+            flex: 1;
+            min-height: 300px;
+            background: var(--negro-carbon);
+            border: 1px solid rgba(200, 155, 60, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .ubicacion-mapa iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            border: none;
+            filter: grayscale(0.6) contrast(1.1);
+        }
+
+        /* ===========================
+           CTA FINAL
+           =========================== */
+        .cta-final {
+            padding: var(--space-2xl) 0;
+            background: var(--negro-carbon);
+            text-align: center;
+        }
+
+        .cta-final h2 {
+            font-family: var(--font-titulos);
+            font-size: 2.5rem;
+            color: var(--crema-hueso);
+            margin-bottom: var(--space-sm);
+            letter-spacing: 0.05em;
+        }
+
+        .cta-final p {
+            color: var(--gris-claro);
+            margin-bottom: var(--space-lg);
+            font-size: 1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            align-items: center;
+        }
+
+        @media (min-width: 640px) {
+            .cta-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        /* ===========================
+           FOOTER
+           =========================== */
+        .footer {
+            padding: var(--space-lg) 0;
+            background: var(--gris-oscuro);
+            border-top: 1px solid rgba(200, 155, 60, 0.15);
+        }
+
+        .footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .footer .container {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+
+        .footer-logo {
+            font-family: var(--font-titulos);
+            font-size: 1.3rem;
+            color: var(--dorado-barbero);
+            letter-spacing: 0.1em;
+        }
+
+        .footer-info {
+            font-size: 0.8rem;
+            color: var(--gris-claro);
+            line-height: 1.8;
+        }
+
+        .footer-info a {
+            color: var(--dorado-barbero);
+            transition: color 0.3s;
+        }
+
+        .footer-info a:hover {
+            color: #d4a843;
+        }
+
+        .footer-credit {
+            font-size: 0.7rem;
+            color: var(--gris-medio);
+            margin-top: var(--space-sm);
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-credit a {
+            color: var(--dorado-barbero);
+        }
+
+        /* ===========================
+           DIVIDERS
+           =========================== */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(200, 155, 60, 0.3), transparent);
+            margin: 0;
+        }
+
+        /* ===========================
+           SCROLL TO TOP
+           =========================== */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: var(--dorado-barbero);
+            color: var(--negro-carbon);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 50;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--negro-carbon);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <div class="container">
+            <a href="#" class="nav-logo">LBE</a>
+            <ul class="nav-links">
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#horario">Horario</a></li>
+                <li><a href="#ubicacion">Ubicación</a></li>
+            </ul>
+            <a href="https://es.fresha.com/providers/la-barberia-del-este-tyo0i0bj?pId=156937" target="_blank" rel="noopener" class="btn-primary nav-cta">Reservar</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <svg class="hero-logo" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+            <!-- Círculo exterior -->
+            <circle cx="120" cy="120" r="115" fill="none" stroke="#C89B3C" stroke-width="3"/>
+            <circle cx="120" cy="120" r="108" fill="none" stroke="#C89B3C" stroke-width="1"/>
+            <!-- Líneas decorativas superior e inferior -->
+            <line x1="60" y1="52" x2="180" y2="52" stroke="#C89B3C" stroke-width="1.5"/>
+            <line x1="60" y1="188" x2="180" y2="188" stroke="#C89B3C" stroke-width="1.5"/>
+            <!-- Monograma LBE -->
+            <text x="120" y="135" text-anchor="middle" fill="#C89B3C" font-family="'Bebas Neue', sans-serif" font-size="72" letter-spacing="8">LBE</text>
+            <!-- Nombre completo arriba -->
+            <text x="120" y="42" text-anchor="middle" fill="#C89B3C" font-family="'Bebas Neue', sans-serif" font-size="11" letter-spacing="4">LA BARBERÍA DEL ESTE</text>
+            <!-- Año abajo -->
+            <text x="120" y="204" text-anchor="middle" fill="#F2E9D8" font-family="'Poppins', sans-serif" font-size="9" letter-spacing="3">SAN RAFAEL · SAN JOSÉ</text>
+            <!-- Tijeras decorativas izquierda -->
+            <g transform="translate(38, 115) scale(0.5)" fill="none" stroke="#C89B3C" stroke-width="2">
+                <circle cx="0" cy="0" r="8"/>
+                <line x1="6" y1="-6" x2="20" y2="-20"/>
+                <circle cx="24" cy="-24" r="8"/>
+            </g>
+            <!-- Tijeras decorativas derecha -->
+            <g transform="translate(198, 115) scale(0.5) rotate(180)" fill="none" stroke="#C89B3C" stroke-width="2">
+                <circle cx="0" cy="0" r="8"/>
+                <line x1="6" y1="-6" x2="20" y2="-20"/>
+                <circle cx="24" cy="-24" r="8"/>
+            </g>
+        </svg>
+
+        <h1>La Barbería del Este</h1>
+        <p class="tagline">Estilo clásico · Acabado perfecto</p>
+
+        <div class="location-tag">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            200m este del Servicentro San Rafael
+        </div>
+
+        <a href="https://es.fresha.com/providers/la-barberia-del-este-tyo0i0bj?pId=156937" target="_blank" rel="noopener" class="btn-primary">Reservar cita</a>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SERVICIOS -->
+    <section class="servicios" id="servicios">
+        <div class="container">
+            <h2 class="section-title">Servicios</h2>
+            <div class="servicios-grid">
+
+                <div class="servicio-card">
+                    <h3>Corte de cabello</h3>
+                    <div class="duracion">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                        ~30 min
+                    </div>
+                    <div class="precio">₡7.000 <span>/ servicio</span></div>
+                </div>
+
+                <div class="servicio-card">
+                    <h3>Barba</h3>
+                    <p style="font-size: 0.85rem; color: var(--gris-claro);">Recorte y delineado</p>
+                    <div class="duracion">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                        ~20 min
+                    </div>
+                    <div class="precio">₡5.000 <span>/ servicio</span></div>
+                </div>
+
+                <div class="servicio-card featured">
+                    <span class="badge">Más pedido</span>
+                    <h3>Corte y Barba</h3>
+                    <p style="font-size: 0.85rem; color: var(--gris-claro);">Combo completo</p>
+                    <div class="duracion">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                        ~45 min
+                    </div>
+                    <div class="precio">₡9.000 <span>/ combo</span></div>
+                </div>
+
+                <div class="servicio-card">
+                    <h3>Rebajar barba</h3>
+                    <p style="font-size: 0.85rem; color: var(--gris-claro);">Rebajar volumen</p>
+                    <div class="duracion">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                        ~15 min
+                    </div>
+                    <div class="precio">₡2.000 <span>/ servicio</span></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- HORARIO -->
+    <section class="horario" id="horario">
+        <div class="container">
+            <h2 class="section-title">Horario</h2>
+            <div class="horario-content">
+                <div class="horario-table">
+                    <div class="horario-row">
+                        <span class="dia">Lunes</span>
+                        <span class="hora">9:00am – 7:00pm</span>
+                    </div>
+                    <div class="horario-row">
+                        <span class="dia">Martes</span>
+                        <span class="hora">9:00am – 7:00pm</span>
+                    </div>
+                    <div class="horario-row">
+                        <span class="dia">Miércoles</span>
+                        <span class="hora">9:00am – 7:00pm</span>
+                    </div>
+                    <div class="horario-row">
+                        <span class="dia">Jueves</span>
+                        <span class="hora">9:00am – 7:00pm</span>
+                    </div>
+                    <div class="horario-row">
+                        <span class="dia">Viernes</span>
+                        <span class="hora">9:00am – 7:00pm</span>
+                    </div>
+                    <div class="horario-row">
+                        <span class="dia">Sábado</span>
+                        <span class="hora">7:00am – 2:00pm</span>
+                    </div>
+                    <div class="horario-row cerrado">
+                        <span class="dia">Domingo</span>
+                        <span class="hora">Cerrado</span>
+                    </div>
+                </div>
+                <p class="horario-note">Reservá tu cita por Fresha para asegurar tu espacio. Los horarios pueden variar en días festivos.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- UBICACIÓN -->
+    <section class="ubicacion" id="ubicacion">
+        <div class="container">
+            <h2 class="section-title">Ubicación</h2>
+            <div class="ubicacion-content">
+                <div class="ubicacion-info">
+                    <h3>Encontranos en San Rafael</h3>
+                    <p class="direccion">
+                        200m este del Servicentro San Rafael<br>
+                        Local de madera<br>
+                        San Rafael, San José, Costa Rica
+                    </p>
+                    <p class="referencia">Referencia: 200 metros al este del Servicentro San Rafael, local de madera a la derecha.</p>
+                </div>
+                <div class="ubicacion-mapa">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.5!2d-84.0!3d9.95!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwNTcnMDAuMCJOIDg0wrAwMCcwMC4wIlc!5e0!3m2!1ses!2scr!4v1"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Ubicación de La Barbería del Este">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CTA FINAL -->
+    <section class="cta-final">
+        <div class="container">
+            <h2>¿Listo para un corte?</h2>
+            <p>Reservá tu cita ahora y experimentá el estilo clásico que merecés.</p>
+            <div class="cta-buttons">
+                <a href="https://es.fresha.com/providers/la-barberia-del-este-tyo0i0bj?pId=156937" target="_blank" rel="noopener" class="btn-primary">Reservar cita en Fresha</a>
+                <a href="#servicios" class="btn-outline">Ver servicios</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">La Barbería del Este</div>
+            <div class="footer-info">
+                200m este del Servicentro San Rafael<br>
+                San Rafael, San José, Costa Rica<br>
+                <a href="https://es.fresha.com/providers/la-barberia-del-este-tyo0i0bj?pId=156937" target="_blank" rel="noopener">Reservar en Fresha</a>
+            </div>
+            <div class="footer-info">
+                Lunes – Viernes: 9am – 7pm<br>
+                Sábado: 7am – 2pm<br>
+                Domingo: Cerrado
+            </div>
+        </div>
+        <div class="footer-credit">
+            Demo creada por <a href="https://sotonavarrojosue-creator.github.io/aparece-web/" target="_blank" rel="noopener">APARECÉ</a> · Presencia Digital · Costa Rica
+        </div>
+    </footer>
+
+    <!-- SCROLL TO TOP -->
+    <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">
+        <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    </button>
+
+    <script>
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
